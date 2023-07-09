@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     }
 
      fun age(a : Int, b : Int) : Int{
-         return a + b
+         return a - b
      }
     fun sun(c : Int) : Int{
         var sum = 0
