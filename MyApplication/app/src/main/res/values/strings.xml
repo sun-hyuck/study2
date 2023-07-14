@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="name">황순혁</string>
+    <string name="title">MyWeather</string>
+    <string name="weather_url">https://openweathermap.org/</string>
+    <string name="weather_app_id">5c75c2341da662502cddf22fa9c2f599</string>
+    <string name="weather_seoul_id">1835848</string>
 </resources>
