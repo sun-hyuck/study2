@@ -2,30 +2,76 @@ package com.example.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.autofill.UserData
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import com.example.myapplication.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
 
+    val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-        val sum = age(3,4)
-        Log.d("MainActivity",  "INTEGER입니다. $sum" )
-        val second = sun(10)
-        Log.d("MainActivity",  "2번째 ${sun(5)}" )
+        var user = User("qwer", "1234")
+        val a = binding.LoginID
+        val b = binding.LoginPW
 
-    }
 
-     fun age(a : Int, b : Int) : Int{
-         return a - b
-     }
-    fun sun(c : Int) : Int{
-        var sum = 0
-        for( index in 0..c ){
-            sum += index
+
+        binding.btn.setOnClickListener {
+        var inputID = binding.LoginID.text.toString()
+        var inputpassword = binding.LoginPW.text.toString()
+        if (inputID==user.ID && inputpassword==user.Password){
+            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+        }else
+        { if(inputID !=user.ID && inputpassword==user.Password){
+            Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
+        }else{
+            if (inputID ==user.ID && inputpassword != user.Password){
+                Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
+            }else{
+                if (inputID !=user.ID && inputpassword != user.Password){
+                    Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
+                }else{
+                    if(inputID.isNullOrEmpty() && inputpassword.isNullOrEmpty()){
+                        Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
-        return sum
+
+        }
+            }
+
     }
 }
+
+data class User(val ID: String,
+                val Password: String
+                )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
