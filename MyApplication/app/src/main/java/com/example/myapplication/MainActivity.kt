@@ -20,7 +20,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+<<<<<<< HEAD
         val intent = Intent(this, WeatherActivity::class.java)
+=======
+        val intent = Intent(this, activityTest::class.java)
+>>>>>>> origin/main
 
         var user = User("qwer", "1234")
         val a = binding.LoginID
@@ -33,7 +37,11 @@ class MainActivity : AppCompatActivity() {
         var inputID = binding.LoginID.text.toString()
         var inputpassword = binding.LoginPW.text.toString()
         if (inputID==user.ID && inputpassword==user.Password){
+<<<<<<< HEAD
                 var intent = Intent(this, WeatherActivity::class.java)
+=======
+            var intent = Intent(this, activityTest::class.java)
+>>>>>>> origin/main
             startActivity(intent)
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
         }else
