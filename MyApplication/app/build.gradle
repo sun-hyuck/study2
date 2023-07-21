@@ -10,6 +10,7 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
 
     defaultConfig {
@@ -19,6 +20,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "API_KEY", "\"4scTVD28holis07VzuglmIvLbvK3WwZDWZP4LO%2F3bkOtILz9zYNk%2FDd7T1fd69Y%2BfHqTJKqsG3E%2Bc6rvAZ37Bw%3D%3D\""
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,6 +29,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+
         }
     }
     compileOptions {

@@ -1,14 +1,14 @@
 package com.example.myapplication
 
-import com.google.gson.internal.GsonBuildConfig
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+
+
 interface RetrofitService {
 
-    @GET(BuildConfig.5c75c2341da662502cddf22fa9c2f599)
-
+    @GET("4scTVD28holis07VzuglmIvLbvK3WwZDWZP4LO%2F3bkOtILz9zYNk%2FDd7T1fd69Y%2BfHqTJKqsG3E%2Bc6rvAZ37Bw%3D%3D")
     fun getWeather(
         @Query("numOfRows") num_of_rows: Int,
         @Query("pageNo") page_no: Int,

@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.graphics.Point
 import android.location.LocationRequest
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import retrofit2.Callback
 
 class WeatherActivity : AppCompatActivity() {
@@ -38,9 +40,9 @@ class WeatherActivity : AppCompatActivity() {
         binding = setContentView(this, R.layout.activity_weather)
         binding.weatherActivity = this
 
-        val permissionList = arrayOf<String>(
+        val permissionList = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
         )
 
         ActivityCompat.requestPermissions(this@WeatherActivity, permissionList, 1)
@@ -60,7 +62,9 @@ class WeatherActivity : AppCompatActivity() {
         val timeH = SimpleDateFormat("HH", Locale.getDefault()).format(cal.time)
         val timeM = SimpleDateFormat("HH", Locale.getDefault()).format(cal.time)
 
-        baseTime = Common.getBaseTime(timeH, timeM)
+        val common = Common()
+
+        baseTime = common.getBaseTime(timeH, timeM)
         if (timeH == "00" && baseTime == "2330") {
             cal.add(Calendar.DATE, -1).toString()
             baseDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
@@ -111,20 +115,19 @@ class WeatherActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private  fun requestLocation(){
-         val locationClient = LocationService.getFusedLocationProviderClient(this@WeatherActivity)
+         val locationClient = LocationServices.getFusedLocationProviderClient(this@WeatherActivity)
 
         try {
-            val locationRequest = LocationRequest.create()
-            locationRequest.run {
-                priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-                interval = 60 * 1000
-            }
+             val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 5000
+            val  locationRequest = com.google.android.gms.location.LocationRequest.Builder(
+                Priority.PRIORITY_HIGH_ACCURACY, UPDATE_INTERVAL_IN_MILLISECONDS
+            ).build()
             val locationCallback = object : LocationCallback(){
 
                 @SuppressLint("SetTextI18n")
                 override fun onLocationResult(pO: LocationResult) {
                     pO.let {
-                        for (location in it.location){
+                        for (location in it.locations){
 
                             curPoint= Common().dfsXyConv(location.latitude, location.longitude)
 

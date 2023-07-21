@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, WeatherActivity::class.java)
 
+
         var user = User("qwer", "1234")
         val a = binding.LoginID
         val b = binding.LoginPW
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         var inputpassword = binding.LoginPW.text.toString()
         if (inputID==user.ID && inputpassword==user.Password){
                 var intent = Intent(this, WeatherActivity::class.java)
+
             startActivity(intent)
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
         }else
