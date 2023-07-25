@@ -20,11 +20,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-<<<<<<<<< Temporary merge branch 1
-        val intent = Intent(this, activityTest::class.java)
-=========
+
         val intent = Intent(this, WeatherActivity::class.java)
->>>>>>>>> Temporary merge branch 2
+
+
 
         var user = User("qwer", "1234")
         val a = binding.LoginID
@@ -37,11 +36,10 @@ class MainActivity : AppCompatActivity() {
         var inputID = binding.LoginID.text.toString()
         var inputpassword = binding.LoginPW.text.toString()
         if (inputID==user.ID && inputpassword==user.Password){
-<<<<<<<<< Temporary merge branch 1
-            var intent = Intent(this, activityTest::class.java)
-=========
-                var intent = Intent(this, WeatherActivity::class.java)
->>>>>>>>> Temporary merge branch 2
+
+            var intent = Intent(this, WeatherActivity::class.java)
+
+
             startActivity(intent)
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
         }else

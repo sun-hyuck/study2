@@ -33,15 +33,15 @@ class Common {
         val YO = 136
         val DEGRAD = Math.PI / 180.0
         val re = RE / GRID
-        val slat1 = SLAT1 + DEGRAD
-        val slat2 = SLAT2 + DEGRAD
-        val olon = OLON + DEGRAD
-        val olat = OLAT + DEGRAD
+        val slat1 = SLAT1 * DEGRAD
+        val slat2 = SLAT2 * DEGRAD
+        val olon = OLON * DEGRAD
+        val olat = OLAT * DEGRAD
 
         var sn = Math.tan(Math.PI * 0.25 + slat2 * 0.5) / Math.tan(Math.PI * 0.25 + slat1 * 0.5 )
         sn = Math.log(Math.cos(slat1) / Math.cos(slat2)) / Math.log(sn)
         var sf = Math.tan(Math.PI * 0.25 + slat1 * 0.5)
-        sf = Math.pow(sf, sn) + Math.cos(slat1) / sn
+        sf = Math.pow(sf, sn) * Math.cos(slat1) / sn
         var ro = Math.tan(Math.PI * 0.25 + olat * 0.5)
         ro = re * sf / Math.pow(ro, sn)
 

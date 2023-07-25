@@ -1,13 +1,12 @@
 package com.example.myapplication
 
-import com.google.gson.internal.GsonBuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClass {
     private fun getRetrofit(): Retrofit{
         return Retrofit.Builder()
-            .baseUrl("https://www.data.go.kr/index.do")
+            .baseUrl("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.graphics.Point
 import android.location.LocationRequest
+import java.util.*
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,7 +29,7 @@ import retrofit2.Callback
 
 class WeatherActivity : AppCompatActivity() {
 
-    private var baseDate = "20230721"
+    private var baseDate = "20210510"
     private var baseTime = "1400"
     private var curPoint : Point? = null
 
@@ -40,14 +41,14 @@ class WeatherActivity : AppCompatActivity() {
         binding = setContentView(this, R.layout.activity_weather)
         binding.weatherActivity = this
 
-        val permissionList = arrayOf(
+        val permissionList = arrayOf<String>(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
 
         ActivityCompat.requestPermissions(this@WeatherActivity, permissionList, 1)
 
-        binding.tvDate.text = SimpleDateFormat("MM월 DD일", Locale.getDefault()).format(Calendar.getInstance().time) + "날씨"
+        binding.tvDate.text = SimpleDateFormat("MM월 dd일", Locale.getDefault()).format(Calendar.getInstance().time) + "날씨"
 
         requestLocation()
 
@@ -72,7 +73,7 @@ class WeatherActivity : AppCompatActivity() {
 
         val call = RetrofitClass.getRetrofitService().getWeather(60, 1, "JSON", baseDate, baseTime, nx, ny)
 
-        call.enqueue(object : Callback<WEATHER> {
+        call.enqueue(object : retrofit2.Callback<WEATHER> {
             override fun onResponse(call: Call<WEATHER>, response: Response<WEATHER>) {
                 if (response.isSuccessful){
                     val it: List<ITEM> = response.body()!!.response.body.items.item
@@ -118,7 +119,7 @@ class WeatherActivity : AppCompatActivity() {
          val locationClient = LocationServices.getFusedLocationProviderClient(this@WeatherActivity)
 
         try {
-             val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 5000
+             val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 6000
             val  locationRequest = com.google.android.gms.location.LocationRequest.Builder(
                 Priority.PRIORITY_HIGH_ACCURACY, UPDATE_INTERVAL_IN_MILLISECONDS
             ).build()
@@ -131,7 +132,7 @@ class WeatherActivity : AppCompatActivity() {
 
                             curPoint= Common().dfsXyConv(location.latitude, location.longitude)
 
-                        binding.tvDate.text = SimpleDateFormat("MM월 dd일", Locale.getDefault()).format(Calendar.getInstance().time) + "날씨"
+                        binding.tvDate.text = SimpleDateFormat("MM월 dd일", Locale.getDefault()).format(Calendar.getInstance().time) + " 날씨"
 
                         setWeather(curPoint!!.x, curPoint!!.y)
                     }

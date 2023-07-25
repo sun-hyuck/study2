@@ -20,7 +20,9 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "API_KEY", "\"4scTVD28holis07VzuglmIvLbvK3WwZDWZP4LO%2F3bkOtILz9zYNk%2FDd7T1fd69Y%2BfHqTJKqsG3E%2Bc6rvAZ37Bw%3D%3D\""
+        buildConfigField("String", "URL_WEATHER", '"http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"')
+
+        buildConfigField("String", "API_KEY", '"4scTVD28holis07VzuglmIvLbvK3WwZDWZP4LO%2F3bkOtILz9zYNk%2FDd7T1fd69Y%2BfHqTJKqsG3E%2Bc6rvAZ37Bw%3D%3D"')
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
+
 class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherAdapter.ViewHolder {
@@ -50,12 +51,14 @@ class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<We
                 hourSystem -= 1200
                 hourSystemString = hourSystem.toString()
                 return "오후 ${hourSystemString[0]}${hourSystemString[1]}시"
+
             } else if (hourSystem == 1200) {
                 return "오후 12시"
             } else if (hourSystem > 1200) {
                 hourSystem -= 1200
                 hourSystemString = hourSystem.toString()
                 return "오후 ${hourSystemString[0]}시"
+
             } else if (hourSystem >= 1000) {
                 hourSystemString = hourSystem.toString()
 

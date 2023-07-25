@@ -15,7 +15,7 @@ data class ModelWeather(
     @SerializedName("humidity") var humidity: String = "",
     @SerializedName("sky") var sky: String = "",
     @SerializedName("temp") var temp: String = "",
-    @SerializedName("fcstTime") var fcstTime: String = "",
+    @SerializedName("fcstTime") var fcstTime: String = ""
 )
 
 data class WEATHER (val response : REPONSE)
