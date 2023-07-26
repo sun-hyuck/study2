@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.graphics.Point
+import android.util.Log
 
 class Common {
 
@@ -56,5 +57,6 @@ class Common {
         val y = (ro - ra * Math.cos(theta) + YO + 0.5).toInt()
 
         return Point(x, y)
+
     }
 }
