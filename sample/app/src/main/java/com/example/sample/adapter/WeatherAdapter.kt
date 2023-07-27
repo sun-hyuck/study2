@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.sample.R
 import com.example.sample.model.ModelWeather
 
-class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<WeatherAdapter.ViewHoler>() {
+class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherAdapter.ViewHoler {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherAdapter.ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item_weather, parent, false)
         return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: WeatherAdapter.ViewHoler, position: Int) {
+    override fun onBindViewHolder(holder: WeatherAdapter.ViewHolder, position: Int) {
         val item = items[position]
         holder.setItem(item)
     }
@@ -34,12 +34,28 @@ class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<We
             tvTime.text = item.fcstTime
             tvRainType.text = getRainType(item.rainType)
             tvHumudity.text = item.humidity
-            tvSky.text = item.temp + "°"
+            tvSky.text = "${item.temp}°"
 
         }
     }
 
     fun getRainType(rainType : String) : String {
-
+        return when(rainType) {
+            "0" -> "없음"
+            "1" -> "비"
+            "2" -> "비/눈"
+            "3" -> "눈"
+            else -> "오류 rainType : $rainType"
+        }
     }
+    fun getSky(sky : String) : String{
+        return when(sky) {
+            "0" -> "없음"
+            "1" -> "비"
+            "2" -> "비/눈"
+            "3" -> "눈"
+            else -> "오류 rainType : $sky"
+        }
+    }
+
 }
