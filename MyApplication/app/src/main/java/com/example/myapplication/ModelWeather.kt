@@ -1,14 +1,7 @@
 package com.example.myapplication
 
 
-import android.content.ClipData.Item
-import android.renderscript.Element.DataType
 import com.google.gson.annotations.SerializedName
-import okhttp3.Headers
-import okhttp3.Response
-import okhttp3.internal.http2.ErrorCode
-import okhttp3.internal.http2.Header
-import retrofit2.http.Body
 
 data class ModelWeather(
     @SerializedName("rainType") var rainType: String = "",

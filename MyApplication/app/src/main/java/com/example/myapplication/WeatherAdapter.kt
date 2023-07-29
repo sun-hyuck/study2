@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 
-class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
+class WeatherAdapter (var items: Array<ModelWeather>) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherAdapter.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item_weather, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_weather, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -24,23 +25,16 @@ class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<We
 
     override fun getItemCount() = items.count()
 
-    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        @SuppressLint("SetTextI18n")
-        fun setItem(item: ModelWeather){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun setItem(item: ModelWeather) {
             val imgWeather = itemView.findViewById<ImageView>(R.id.imgWeather)
             val tvTime = itemView.findViewById<TextView>(R.id.tvTime)
             val tvHumidity = itemView.findViewById<TextView>(R.id.tvHumidity)
             val tvTemp = itemView.findViewById<TextView>(R.id.tvTemp)
-
-            imgWeather.setImageResource(getRainImage(item.rainType, item.sky))
-            tvTime.text = getTime(item.fcstTime)
-            tvHumidity.text= item.humidity + "%"
-            tvTemp.text = item.temp + "° "
-
+        }
     }
 
-}
-    fun getTime(factTime : String): String {
+    fun getTime(factTime: String): String {
         if (factTime != "지금") {
             var hourSystem: Int = factTime.toInt()
             var hourSystemString = ""
@@ -58,22 +52,22 @@ class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<We
                 hourSystem -= 1200
                 hourSystemString = hourSystem.toString()
                 return "오후 ${hourSystemString[0]}시"
-
-            } else if (hourSystem >= 1000) {
+            }
+            else if (hourSystem >= 1000) {
                 hourSystemString = hourSystem.toString()
-
                 return "오전 ${hourSystemString[0]}${hourSystemString[1]}시"
-            } else {
+            }else{
                 hourSystemString = hourSystem.toString()
-
                 return "오전 ${hourSystemString[0]}시"
             }
 
-        }else{
+        } else {
             return factTime
         }
+
     }
-    fun getRainImage(rainType: String, sky: String) : Int {
+
+    fun getRainImage(rainType : String, sky : String) : Int{
         return when(rainType) {
             "0" -> getWeatherImage(sky)
             "1" -> R.drawable.rainy
@@ -83,8 +77,7 @@ class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<We
             else -> getWeatherImage(sky)
         }
     }
-    fun getWeatherImage(sky: String) : Int {
-
+    fun getWeatherImage(sky : String): Int {
         return when(sky) {
             "1" -> R.drawable.sun
             "3" -> R.drawable.cloudy
@@ -93,3 +86,4 @@ class WeatherAdapter (var items : Array<ModelWeather>) : RecyclerView.Adapter<We
         }
     }
 }
+

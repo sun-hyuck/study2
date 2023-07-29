@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
 import com.example.myapplication.databinding.ActivityWeatherBinding
 import androidx.databinding.DataBindingUtil.setContentView
 import com.google.android.gms.location.LocationCallback
@@ -31,13 +32,14 @@ class WeatherActivity : AppCompatActivity() {
 
     private var baseDate = "20230729"
     private var baseTime = "2330"
-    private var curPoint : Point? = null
+    private var curPoint: Point? = null
 
 
-    lateinit var  binding: ActivityWeatherBinding
+    lateinit var binding: ActivityWeatherBinding
+
     @SuppressLint("SetTextI18n", "MissingPermission")
     @RequiresApi(Build.VERSION_CODES.S)
-    override fun onCreate(savedInstanceState: Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = setContentView(this, R.layout.activity_weather)
         binding.weatherActivity = this
@@ -50,7 +52,10 @@ class WeatherActivity : AppCompatActivity() {
 
         ActivityCompat.requestPermissions(this@WeatherActivity, permissionList, 1)
 
-        binding.tvDate.text = SimpleDateFormat("MM월 dd일",Locale.getDefault()).format(Calendar.getInstance().time) + "날씨"
+        binding.tvDate.text = SimpleDateFormat(
+            "MM월 dd일",
+            Locale.getDefault()
+        ).format(Calendar.getInstance().time) + "날씨"
 
         requestLocation()
 
@@ -60,7 +65,7 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 
-    private fun setWeather(nx : Int, ny: Int) {
+    private fun setWeather(nx: Int, ny: Int) {
         val cal = Calendar.getInstance()
         baseDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
         val timeH = SimpleDateFormat("HH", Locale.getDefault()).format(cal.time)
@@ -68,12 +73,13 @@ class WeatherActivity : AppCompatActivity() {
 
         baseTime = Common().getBaseTime(timeH, timeM)
 
-        if (timeH == "00"&& baseTime == "2330") {
+        if (timeH == "00" && baseTime == "2330") {
             cal.add(Calendar.DATE, -1).toString()
             baseDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
         }
 
-        val call = RetrofitClass.getRetrofitService().getWeather(60, 1, "JSON", baseDate, baseTime, nx, ny)
+        val call =
+            RetrofitClass.getRetrofitService().getWeather(60, 1, "JSON", baseDate, baseTime, nx, ny)
 
         call.enqueue(object : retrofit2.Callback<WEATHER> {
             override fun onResponse(call: Call<WEATHER>, response: Response<WEATHER>) {
@@ -126,45 +132,45 @@ class WeatherActivity : AppCompatActivity() {
             }
         })
 
-        }
+    }
 
     @SuppressLint("MissingPermission")
-    private fun requestLocation(){
+    private fun requestLocation() {
         val locationClient = LocationServices.getFusedLocationProviderClient(this@WeatherActivity)
 
-        try{
-            val locationRequest = com.google.android.gms.location.LocationRequest.create()
-            locationRequest.run {
-                priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-                interval = 60 * 1000    // 요청 간격(1초)
-
+        try {
+            val locationRequest = LocationRequest.create().apply {
+                priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                interval = 60 * 1000 // 1분에 한 번씩 위치 업데이트 요청
             }
+
             val locationCallback = object : LocationCallback() {
                 @SuppressLint("SetTextI18n")
                 override fun onLocationResult(p0: LocationResult) {
-                   p0.let {
-                       for (location in it.locations){
+                    p0.let {
+                        for (location in it.locations) {
 
-                           curPoint = Common().dfsXyConv(location.latitude, location.longitude)
+                            curPoint = Common().dfsXyConv(location.latitude, location.longitude)
 
-                           binding.tvDate.text = SimpleDateFormat("MM월 dd일", Locale.getDefault()).format(Calendar.getInstance().time) + "날씨"
+                            binding.tvDate.text = SimpleDateFormat(
+                                "MM월 dd일",
+                                Locale.getDefault()
+                            ).format(Calendar.getInstance().time) + "날씨"
 
-                           setWeather(curPoint!!.x, curPoint!!.y)
+                            setWeather(curPoint!!.x, curPoint!!.y)
 
-                       }
-                   }
+                        }
+                    }
                 }
             }
             Looper.myLooper()?.let {
                 locationClient.requestLocationUpdates(locationRequest, locationCallback, it)
             }
 
-        } catch (e : SecurityException){
+        } catch (e: SecurityException) {
             e.printStackTrace()
         }
     }
-
-
 }
 
 
