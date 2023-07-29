@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.databinding.DataBindingUtil
 import com.example.myapplication.databinding.ActivityWeatherBinding
 import androidx.databinding.DataBindingUtil.setContentView
 import com.google.android.gms.location.LocationCallback
@@ -26,14 +25,12 @@ import java.util.Locale
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import retrofit2.Callback
 
 class WeatherActivity : AppCompatActivity() {
 
     private var baseDate = "20230729"
     private var baseTime = "2330"
     private var curPoint: Point? = null
-
 
     lateinit var binding: ActivityWeatherBinding
 
@@ -52,9 +49,7 @@ class WeatherActivity : AppCompatActivity() {
 
         ActivityCompat.requestPermissions(this@WeatherActivity, permissionList, 1)
 
-        binding.tvDate.text = SimpleDateFormat(
-            "MM월 dd일",
-            Locale.getDefault()
+        binding.tvDate.text = SimpleDateFormat("MM월 dd일", Locale.getDefault()
         ).format(Calendar.getInstance().time) + "날씨"
 
         requestLocation()
@@ -78,8 +73,7 @@ class WeatherActivity : AppCompatActivity() {
             baseDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
         }
 
-        val call =
-            RetrofitClass.getRetrofitService().getWeather(60, 1, "JSON", baseDate, baseTime, nx, ny)
+        val call = RetrofitClass.getRetrofitService().getWeather(60, 1, "JSON", baseDate, baseTime, nx, ny)
 
         call.enqueue(object : retrofit2.Callback<WEATHER> {
             override fun onResponse(call: Call<WEATHER>, response: Response<WEATHER>) {
@@ -139,10 +133,8 @@ class WeatherActivity : AppCompatActivity() {
         val locationClient = LocationServices.getFusedLocationProviderClient(this@WeatherActivity)
 
         try {
-            val locationRequest = LocationRequest.create().apply {
-                priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-                interval = 60 * 1000 // 1분에 한 번씩 위치 업데이트 요청
-            }
+            val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 6000)
+                .build()
 
             val locationCallback = object : LocationCallback() {
                 @SuppressLint("SetTextI18n")

@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClass {
     private fun getRetrofit(): Retrofit{
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.URL_WEATHER)
+            .baseUrl("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
