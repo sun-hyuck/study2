@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.Manifest
 import android.annotation.SuppressLint
 import android.graphics.Point
+import android.location.Location
 import java.util.*
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.example.myapplication.databinding.ActivityWeatherBinding
 import androidx.databinding.DataBindingUtil.setContentView
+import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import retrofit2.Call
@@ -25,6 +27,9 @@ import java.util.Locale
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.OnTokenCanceledListener
 
 class WeatherActivity : AppCompatActivity() {
 
@@ -51,6 +56,8 @@ class WeatherActivity : AppCompatActivity() {
 
         binding.tvDate.text = SimpleDateFormat("MM월 dd일", Locale.getDefault()
         ).format(Calendar.getInstance().time) + "날씨"
+
+
 
         requestLocation()
 
@@ -129,12 +136,32 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun requestLocation() {
+    private fun requestLocation(){
         val locationClient = LocationServices.getFusedLocationProviderClient(this@WeatherActivity)
 
         try {
-            val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 6000)
+            val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 100000)
                 .build()
+
+//            val currentLocation = locationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY,
+//                object : CancellationToken(){
+//                    override fun onCanceledRequested(p0: OnTokenCanceledListener): CancellationToken = CancellationTokenSource().token
+//
+//                    override fun isCancellationRequested(): Boolean = false
+//
+//                }).addOnSuccessListener {
+//                if (it == null)
+//                    Toast.makeText(this, "Cannot get location.", Toast.LENGTH_SHORT).show()
+//                else {
+//                    val lat = it.latitude
+//                    val lon = it.longitude
+//
+//                    Log.d("CurrentLocation", "${lat.toInt()}, ${lon.toInt()}")
+//                    setWeather(lat.toInt(), lon.toInt())
+//                 }
+//                }
+
+
 
             val locationCallback = object : LocationCallback() {
                 @SuppressLint("SetTextI18n")
@@ -144,24 +171,32 @@ class WeatherActivity : AppCompatActivity() {
 
                             curPoint = Common().dfsXyConv(location.latitude, location.longitude)
 
+                            Log.d("Location", "${curPoint!!.x}, ${curPoint!!.y}")
+
                             binding.tvDate.text = SimpleDateFormat(
                                 "MM월 dd일",
                                 Locale.getDefault()
                             ).format(Calendar.getInstance().time) + "날씨"
 
-                            setWeather(curPoint!!.x, curPoint!!.y)
-
+                            setWeather(curPoint!!.x,curPoint!!.y)
                         }
+
                     }
+
                 }
             }
+
             Looper.myLooper()?.let {
                 locationClient.requestLocationUpdates(locationRequest, locationCallback, it)
             }
 
+
+
+
         } catch (e: SecurityException) {
             e.printStackTrace()
         }
+
     }
 }
 
