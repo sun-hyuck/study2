@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Point
 import android.location.Location
 import java.util.*
@@ -27,6 +28,7 @@ import java.util.Locale
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
@@ -64,6 +66,11 @@ class WeatherActivity : AppCompatActivity() {
         binding.btnRefresh.setOnClickListener {
             requestLocation()
 
+        }
+
+        binding.btnMap.setOnClickListener {
+            var intent = Intent (this, MapFragment::class.java)
+            startActivity(intent)
         }
     }
 
@@ -143,23 +150,23 @@ class WeatherActivity : AppCompatActivity() {
             val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 100000)
                 .build()
 
-//            val currentLocation = locationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY,
-//                object : CancellationToken(){
-//                    override fun onCanceledRequested(p0: OnTokenCanceledListener): CancellationToken = CancellationTokenSource().token
-//
-//                    override fun isCancellationRequested(): Boolean = false
-//
-//                }).addOnSuccessListener {
-//                if (it == null)
-//                    Toast.makeText(this, "Cannot get location.", Toast.LENGTH_SHORT).show()
-//                else {
-//                    val lat = it.latitude
-//                    val lon = it.longitude
-//
-//                    Log.d("CurrentLocation", "${lat.toInt()}, ${lon.toInt()}")
-//                    setWeather(lat.toInt(), lon.toInt())
-//                 }
-//                }
+           val currentLocation = locationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY,
+                object : CancellationToken(){
+                   override fun onCanceledRequested(p0: OnTokenCanceledListener): CancellationToken = CancellationTokenSource().token
+
+                   override fun isCancellationRequested(): Boolean = false
+
+               }).addOnSuccessListener {
+                if (it == null)
+                    Toast.makeText(this, "Cannot get location.", Toast.LENGTH_SHORT).show()
+                else {
+                  val lat = it.latitude
+                 val lon = it.longitude
+
+                  Log.d("CurrentLocation", "${lat.toInt()}, ${lon.toInt()}")
+                   setWeather(lat.toInt(), lon.toInt())
+                 }
+             }
 
 
 
