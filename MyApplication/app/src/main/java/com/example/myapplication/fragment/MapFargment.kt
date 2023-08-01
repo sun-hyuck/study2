@@ -20,11 +20,11 @@ class MapFargment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_map,container,false)
-        mapView = rootView.findViewById(R.id.mapFragment) as MapView
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        ): View? {
+            val rootView = inflater.inflate(R.layout.fragment_map,container,false)
+            mapView = rootView.findViewById(R.id.mapFragment) as MapView
+            mapView.onCreate(savedInstanceState)
+            mapView.getMapAsync(this)
         return rootView
     }
 

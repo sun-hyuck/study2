@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
+import android.text.TextUtils.replace
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -17,6 +18,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.example.myapplication.databinding.ActivityWeatherBinding
 import androidx.databinding.DataBindingUtil.setContentView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.example.myapplication.fragment.MapFargment
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
@@ -29,6 +33,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.MapFragment
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
@@ -41,7 +46,7 @@ class WeatherActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityWeatherBinding
 
-    @SuppressLint("SetTextI18n", "MissingPermission")
+    @SuppressLint("SetTextI18n", "MissingPermission", "CommitTransaction")
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,18 +65,21 @@ class WeatherActivity : AppCompatActivity() {
         ).format(Calendar.getInstance().time) + "날씨"
 
 
-
         requestLocation()
 
-        binding.btnRefresh.setOnClickListener {
-            requestLocation()
-
-        }
-
-        binding.btnMap.setOnClickListener {
-            var intent = Intent (this, MapFragment::class.java)
-            startActivity(intent)
-        }
+//        binding.btnRefresh.setOnClickListener {
+//            requestLocation()
+//
+//        }
+//
+//       binding.btnMap.setOnClickListener {
+//           val fragment = SupportMapFragment()
+//           supportFragmentManager.beginTransaction()
+//               .replace(R.id.mapFragment, fragment)
+//               .addToBackStack(null)
+//               .commit()
+//
+//        }
     }
 
     private fun setWeather(nx: Int, ny: Int) {
@@ -206,5 +214,7 @@ class WeatherActivity : AppCompatActivity() {
 
     }
 }
+
+
 
 

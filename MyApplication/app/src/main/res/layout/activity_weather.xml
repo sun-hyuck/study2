@@ -11,7 +11,7 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".WeatherActivity"
@@ -42,26 +42,24 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/weatherRecyclerView"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btnRefresh"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="새로고침"/>
+            android:layout_above="@id/bottomNavigationView"
+            android:layout_marginBottom="290dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <Button
-            android:id="@+id/btnMap"
-            android:layout_width="wrap_content"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop = "10dp"
-            android:text="지도" />
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/bottom_navigation_menu">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
-    </LinearLayout>
+
+    </RelativeLayout>
 
 </layout>
