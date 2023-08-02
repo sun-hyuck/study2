@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.myapplication.Location
 import com.example.myapplication.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -13,9 +14,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapFargment : Fragment(), OnMapReadyCallback {
+class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mapView: MapView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,9 +31,14 @@ class MapFargment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
-        val point = LatLng(37.514655, 125.979974)
-        map.addMarker(MarkerOptions().position(point).title("현위치"))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(point,12f))
+        val currentPosition = Location().getLocation(requireContext())
+        currentPosition.addOnSuccessListener {
+            val point = LatLng(currentPosition.result.latitude, currentPosition.result.longitude)
+            map.addMarker(MarkerOptions().position(point).title("현위치"))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(point,12f))
+        }
+
+
     }
 
     override fun onStart() {

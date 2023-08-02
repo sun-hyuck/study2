@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_refresh"
-        android:title="새로고침"/>
+        android:id="@+id/weatherFragment"
+        android:title="날씨"
+        android:icon="@drawable/baseline_cloud_24"/>
 
     <item
-        android:id="@+id/action_map"
-        android:title="지도"/>
+        android:id="@+id/mapFragment"
+        android:title="지도"
+        android:icon="@drawable/baseline_location_on_24"/>
 
 </menu>
