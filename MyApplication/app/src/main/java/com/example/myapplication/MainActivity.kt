@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        binding.btn.setOnClickListener {
+
+        }
 
         binding.btn.setOnClickListener {
         var inputID = binding.LoginID.text.toString()
